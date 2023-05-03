@@ -47,8 +47,13 @@ export default {
       message: "Would you like to push to this repo?",
       default: false
     }
-  ]
+  ],
+  tokenQuestion: [
+    {
+      type: "input",
+      name: "token",
+      message: "Enter your github token: "
 
-
+    }]
 
 }

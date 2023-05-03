@@ -29,7 +29,6 @@ class Prompt {
         console.log(chalk.green(`  Successfully deleted repo ${projName}`));
         this.confirmContinue();
       } catch (error) {
-        console.log(error);
         console.log(chalk.red(`  Failed to delete repo ${projName} : ${error.response.data.message}`));
         this.confirmContinue();
       }
@@ -65,7 +64,6 @@ class Prompt {
           }
         )
       } catch (error) {
-        console.log(error);
         console.log(chalk.red(`Failed to create repo ${projName} : ${error.response.data.errors[0].message}`));
         this.confirmContinue();
       }
@@ -73,6 +71,14 @@ class Prompt {
   }
 
   main = async () => {
+
+    try {
+      const auth_token = this.gitClient.readCredentials();
+      this.gitClient.createGitClient(auth_token);
+    } catch (error) {
+      const { token } = await this.prompt(quesitons.tokenQuestion);
+      this.gitClient.createGitClient(this.gitClient.storeCredentials(token));
+    }
     try {
       const authenticated = await this.gitClient.getUserName();
       this.username = authenticated.data.login;
@@ -98,7 +104,8 @@ class Prompt {
 
   test() {
     console.log('test');
-    let s = this.gitClient.pushCommand("projName", "dfsdf", false);
+    // let s = this.gitClient.pushCommand("projName", "dfsdf", false);
+    let s = this.gitClient.readCredentials()
     console.log(s);
   }
 

@@ -5,12 +5,16 @@ import { fileURLToPath } from 'url';
 
 class GitClient {
   constructor() {
-    this.git = new Octokit({
-      auth: process.env.GITHUB_TOKEN
-    })
     this.__filename = fileURLToPath(import.meta.url);
     this.__dirname = path.dirname(this.__filename);
     this.gitDirectoryPath = path.join(this.__dirname, '.git');
+    this.credentialsPath = path.join(this.__dirname, '.credentials');
+  }
+
+  createGitClient = (GITHUB_TOKEN) => {
+    this.git = new Octokit({
+      auth: GITHUB_TOKEN
+    }) 
   }
 
   async createRepo(projName, privateRepo = false) {
@@ -73,7 +77,6 @@ class GitClient {
 
   isGitRemote = () => {
     let isRemote = false;
-
     try {
       const configPath = path.join(this.gitDirectoryPath, 'config');
       const data = fs.readFileSync(configPath, 'utf8')
@@ -87,6 +90,15 @@ class GitClient {
     } catch (error) {
       return isRemote;
     }
+  }
+
+  storeCredentials = (username) => {
+    fs.writeFileSync(this.credentialsPath, username);
+    return this.readCredentials();
+  }
+
+  readCredentials = () => {
+    return fs.readFileSync(this.credentialsPath, 'utf8')
   }
 }
 
