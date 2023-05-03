@@ -6,7 +6,9 @@ import { config } from "dotenv"
 import { exec } from 'child_process';
 import { exit } from 'process';
 import quesitons from './quesitons.js';
-
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 config();
 
 
@@ -28,27 +30,51 @@ class Prompt {
       const { projName } = answers;
       try {
         const res = await this.gitClient.deleteRepo(projName);
-        console.log(chalk.green(`Successfully deleted repo ${projName}`));
+        console.log(chalk.green(`  Successfully deleted repo ${projName}`));
         this.confirmContinue();
       } catch (error) {
         console.log(error);
-        console.log(chalk.red(`Failed to delete repo ${projName} : ${error.response.data.message}`));
+        console.log(chalk.red(`  Failed to delete repo ${projName} : ${error.response.data.message}`));
         this.confirmContinue();
       }
     })
+  }
+
+  hasGitFolder = () => {
+
+    const __filename = fileURLToPath(import.meta.url);
+
+    const __dirname = path.dirname(__filename);
+    const directoryPath = path.join(__dirname, '.git');
+    let exists = false;
+
+    try {
+      fs.readdirSync(directoryPath)
+      exists = true;
+      return exists;
+    } catch (error) {
+      return exists;
+    }
   }
 
   promptCreateRepo = () => {
     this.prompt(quesitons.createRepoQuestions).then(async (answers) => {
       const { privateRepo, projName } = answers;
       try {
+
         const res = await this.gitClient.createRepo(projName, privateRepo);
-        console.log(chalk.green(`Successfully created repo ${res.data.name}`));
+        console.log(chalk.green(`    Successfully created repo ${res.data.name}`));
+        if (this.hasGitFolder()) {
+          this.confirmContinue();
+          return;
+        }
+
         const answer = await this.prompt(quesitons.pushConfirmQuestion)
         if (!answer.push) {
           this.confirmContinue();
           return;
         }
+
         exec(
           this.gitClient.pushCommand(projName, "anandukch"), (err, stdout, stderr) => {
             if (err) {
@@ -56,12 +82,15 @@ class Prompt {
               return;
             }
             console.log(chalk.green(stdout));
-            console.log(chalk.green(`Successfully pushed to repo ${projName}`));
+            console.log(chalk.green(`   Successfully pushed to repo ${projName}`));
             this.confirmContinue();
           }
         )
 
+
+
       } catch (error) {
+        console.log(error);
         console.log(chalk.red(`Failed to create repo ${projName} : ${error.response.data.errors[0].message}`));
         this.confirmContinue();
       }
@@ -93,6 +122,14 @@ class Prompt {
 }
 
 new Prompt().main();
+
+
+
+// import { exit } from 'process';
+
+
+
+// hasGitFolder();
 
 
 

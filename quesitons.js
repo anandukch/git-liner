@@ -45,7 +45,7 @@ export default {
       type: "confirm",
       name: "push",
       message: "Would you like to push to this repo?",
-      default: true
+      default: false
     }
   ]
 
