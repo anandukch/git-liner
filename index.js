@@ -40,7 +40,7 @@ const createRepoQuestions = [
 
 const deleteRepoQuestions = [
   {
-    type: "autocomplete",
+    type: "input",
     name: "projName",
     message: "Enter the the name of your project: ",
     source: async (answersSoFar, input) => {
@@ -101,7 +101,7 @@ const promptCreateRepo = () => {
       exec(
         gitClient.pushCommand(projName, "anandukch"), (err, stdout, stderr) => {
           if (err) {
-            console.log(err);
+            console.log(err.message);
             return;
           }
           console.log(chalk.green(stdout));
