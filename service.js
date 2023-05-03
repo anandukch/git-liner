@@ -1,11 +1,16 @@
 import { Octokit } from '@octokit/core';
-
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 class GitClient {
   constructor() {
     this.git = new Octokit({
       auth: process.env.GITHUB_TOKEN
     })
+    this.__filename = fileURLToPath(import.meta.url);
+    this.__dirname = path.dirname(this.__filename);
+    this.gitDirectoryPath = path.join(this.__dirname, '.git');
   }
 
   async createRepo(projName, privateRepo = false) {
@@ -43,8 +48,8 @@ class GitClient {
     return response
   }
 
-  pushCommand(projName, username) {
-    return `git init && git add . && git commit -m "publishing" && git branch -M master && git remote add origin https://github.com/${username}/${projName}.git && git push -u origin master`;
+  pushCommand(projName, username, existing = false) {
+    return `${!existing ? "git init &&":""} git add . && git commit -m "publishing" && git branch -M master && git remote add origin https://github.com/${username}/${projName}.git && git push -u origin master`;
   }
 
   getUserName() {
@@ -53,6 +58,35 @@ class GitClient {
         'X-GitHub-Api-Version': '2022-11-28'
       }
     })
+  }
+
+  isGitInitialized = () => {
+    let exists = false;
+    try {
+      fs.readdirSync(this.gitDirectoryPath)
+      exists = true;
+      return exists;
+    } catch (error) {
+      return exists;
+    }
+  }
+
+  isGitRemote = () => {
+    let isRemote = false;
+
+    try {
+      const configPath = path.join(this.gitDirectoryPath, 'config');
+      const data = fs.readFileSync(configPath, 'utf8')
+      const regex = /url = .*/g;
+      const result = data.match(regex);
+      if (!result) {
+        return isRemote;
+      }
+      isRemote = true;
+      return isRemote;
+    } catch (error) {
+      return isRemote;
+    }
   }
 }
 

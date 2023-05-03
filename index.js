@@ -6,14 +6,10 @@ import { config } from "dotenv"
 import { exec } from 'child_process';
 import { exit } from 'process';
 import quesitons from './quesitons.js';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+
 config();
 
-
 class Prompt {
-
   constructor() {
     this.prompt = inquirer.prompt;
     this.gitClient = new GitClient();
@@ -40,43 +36,25 @@ class Prompt {
     })
   }
 
-  hasGitFolder = () => {
-
-    const __filename = fileURLToPath(import.meta.url);
-
-    const __dirname = path.dirname(__filename);
-    const directoryPath = path.join(__dirname, '.git');
-    let exists = false;
-
-    try {
-      fs.readdirSync(directoryPath)
-      exists = true;
-      return exists;
-    } catch (error) {
-      return exists;
-    }
-  }
-
   promptCreateRepo = () => {
     this.prompt(quesitons.createRepoQuestions).then(async (answers) => {
       const { privateRepo, projName } = answers;
       try {
 
+        // console.log(this.username);
         const res = await this.gitClient.createRepo(projName, privateRepo);
         console.log(chalk.green(`    Successfully created repo ${res.data.name}`));
-        if (this.hasGitFolder()) {
+        if (this.gitClient.isGitRemote()) {
           this.confirmContinue();
           return;
         }
-
         const answer = await this.prompt(quesitons.pushConfirmQuestion)
         if (!answer.push) {
           this.confirmContinue();
           return;
         }
-
         exec(
-          this.gitClient.pushCommand(projName, "anandukch"), (err, stdout, stderr) => {
+          this.gitClient.pushCommand(projName, this.username, this.gitClient.isGitInitialized()), (err, stdout, stderr) => {
             if (err) {
               console.log(chalk.red(`   Failed to push to repo ${projName}`));
               return;
@@ -86,9 +64,6 @@ class Prompt {
             this.confirmContinue();
           }
         )
-
-
-
       } catch (error) {
         console.log(error);
         console.log(chalk.red(`Failed to create repo ${projName} : ${error.response.data.errors[0].message}`));
@@ -98,8 +73,10 @@ class Prompt {
   }
 
   main = async () => {
-    const authenticated = await this.gitClient.getUserName();
-    if (!authenticated) {
+    try {
+      const authenticated = await this.gitClient.getUserName();
+      this.username = authenticated.data.login;
+    } catch (error) {
       console.log(chalk.red(`  Invalid token`));
       exit();
     }
@@ -119,17 +96,18 @@ class Prompt {
     })
   }
 
+  test() {
+    console.log('test');
+    let s = this.gitClient.pushCommand("projName", "dfsdf", false);
+    console.log(s);
+  }
+
 }
 
 new Prompt().main();
 
 
 
-// import { exit } from 'process';
-
-
-
-// hasGitFolder();
 
 
 
