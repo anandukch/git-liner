@@ -83,7 +83,6 @@ const promptCreateRepo = () => {
   prompt(createRepoQuestions).then(async (answers) => {
     const { privateRepo, projName } = answers;
     try {
-      // console.log(await gitClient.getRepos());
       const res = await gitClient.createRepo(projName, privateRepo);
       console.log(chalk.green(`Successfully created repo ${res.data.name}`));
       const answer=await inquirer.prompt([
@@ -101,7 +100,7 @@ const promptCreateRepo = () => {
       exec(
         gitClient.pushCommand(projName, "anandukch"), (err, stdout, stderr) => {
           if (err) {
-            console.log(err.message);
+            console.log(err.name);
             return;
           }
           console.log(chalk.green(stdout));
