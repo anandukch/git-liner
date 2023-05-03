@@ -25,15 +25,16 @@ class Prompt {
   }
 
   promptDeleteRepo = () => {
-    prompt(quesitons.deleteRepoQuestions).then(async (answers) => {
+    this.prompt(quesitons.deleteRepoQuestions).then(async (answers) => {
       const { projName } = answers;
       try {
         const res = await this.gitClient.deleteRepo(projName);
         console.log(chalk.green(`Successfully deleted repo ${projName}`));
         confirmContinue();
       } catch (error) {
+        console.log(error);
         console.log(chalk.red(`Failed to delete repo ${projName} : ${error.response.data.message}`));
-        confirmContinue();
+        this.confirmContinue();
       }
     })
   }
