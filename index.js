@@ -40,7 +40,7 @@ const createRepoQuestions = [
 
 const deleteRepoQuestions = [
   {
-    type: "input",
+    type: "autocomplete",
     name: "projName",
     message: "Enter the the name of your project: ",
     source: async (answersSoFar, input) => {
@@ -86,6 +86,18 @@ const promptCreateRepo = () => {
       // console.log(await gitClient.getRepos());
       const res = await gitClient.createRepo(projName, privateRepo);
       console.log(chalk.green(`Successfully created repo ${res.data.name}`));
+      const answer=await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "push",
+          message: "Would you like to push to this repo?",
+          default: true
+        }
+      ])
+      if(!answer.push){
+        confirmContinue();
+        return;
+      }
       exec(
         gitClient.pushCommand(projName, "anandukch"), (err, stdout, stderr) => {
           if (err) {
@@ -99,7 +111,6 @@ const promptCreateRepo = () => {
       )
 
     } catch (error) {
-      console.log(error);
       console.log(chalk.red(`Failed to create repo ${projName} : ${error.response.data.errors[0].message}`));
       confirmContinue();
     }
