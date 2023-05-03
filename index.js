@@ -100,8 +100,7 @@ const promptCreateRepo = () => {
       exec(
         gitClient.pushCommand(projName, "anandukch"), (err, stdout, stderr) => {
           if (err) {
-            console.log(chalk.red(`Failed to push to repo ${projName}`));
-            return;
+            console.log(chalk.red(`   Failed to push to repo ${projName}`));
           }
           console.log(chalk.green(stdout));
           console.log(chalk.green(`Successfully pushed to repo ${projName}`));
