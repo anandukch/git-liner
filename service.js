@@ -12,7 +12,7 @@ class GitClient {
     const response = await this.git.request('POST /user/repos', {
       name: projName,
       description: '',
-      homepage: 'https://github.com',
+      homepage: '',
       'private': privateRepo,
       is_template: false,
       headers: {
@@ -45,6 +45,14 @@ class GitClient {
 
   pushCommand(projName, username) {
     return `git init && git add . && git commit -m "publishing" && git branch -M master && git remote add origin https://github.com/${username}/${projName}.git && git push -u origin master`;
+  }
+
+  getUserName() {
+    return this.git.request('GET /user', {
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    })
   }
 }
 
