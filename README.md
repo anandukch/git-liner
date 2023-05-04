@@ -15,7 +15,7 @@
 </p> -->
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/71365444/236139736-471d10c2-257a-426d-a8f0-f03b062930b9.gif" alt="  "/>
+<img src="https://user-images.githubusercontent.com/71365444/236147240-7b4677eb-7572-4e61-aa70-95d4c552074f.gif" alt="  "/>
 </p>
 
 ## Features
@@ -34,21 +34,16 @@ npm install -g git-liner
 ## Usage
 
 ```bash
-ghcli
+git-liner
 ```
 
-<!-- steps -->
-
 ## Steps
-
-<!-- create a github access token -->
 
 ### Create a github access token
 
 - Navigate to github Setting > developer option > personal access token and create a new access token.
 - Select the scopes with ***admin previlages***
 
-<!-- add an image which show to add token ti cli -->
 
 ### Add the token to cli
 
