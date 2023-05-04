@@ -1,4 +1,4 @@
-<h1 align="center"> GhCli <img height="32rem" style="border-radius:100px;" src="https://user-images.githubusercontent.com/71365444/236141951-74595cf8-9651-4970-ae2c-eff2c0df0840.png" />
+<h1 align="center"> Git-liner <img height="32rem" style="border-radius:100px;" src="https://user-images.githubusercontent.com/71365444/236141951-74595cf8-9651-4970-ae2c-eff2c0df0840.png" />
  </h1>
 <p align="center">
 <i>A tool for managing github from terminal</i>
