@@ -28,7 +28,7 @@
 ## Installation
 
 ```bash
-npm install -g @anandukch/ghcli
+npm install -g git-liner
 ```
 
 ## Usage

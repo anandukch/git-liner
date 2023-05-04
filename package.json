@@ -1,6 +1,6 @@
 {
-  "name": "@anandukch/ghcli",
-  "version": "1.1.1",
+  "name": "git-liner",
+  "version": "1.1.2",
   "description": "",
   "type": "module",
   "main": "index.js",
