@@ -1,4 +1,4 @@
-<h1 align="center"> GhCli <img height="32rem" style="border-radius:100px;" src="./assets/github.png" />
+<h1 align="center"> GhCli <img height="32rem" style="border-radius:100px;" src="https://user-images.githubusercontent.com/71365444/236141951-74595cf8-9651-4970-ae2c-eff2c0df0840.png" />
  </h1>
 <p align="center">
 <i>A tool for managing github from terminal</i>
@@ -15,10 +15,8 @@
 </p> -->
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/71365444/236139736-471d10c2-257a-426d-a8f0-f03b062930b9.gif" />
+<img src="https://user-images.githubusercontent.com/71365444/236139736-471d10c2-257a-426d-a8f0-f03b062930b9.gif" alt="  "/>
 </p>
-
-<!-- ![ghcli in action](https://user-images.githubusercontent.com/71365444/236139736-471d10c2-257a-426d-a8f0-f03b062930b9.gif) -->
 
 ## Features
 
