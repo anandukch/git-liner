@@ -70,15 +70,16 @@ class Prompt {
     })
   }
 
-  main = async () => {
-
+  validateCredentials = async () => {
     try {
-      const auth_token = this.gitClient.readCredentials();
-      this.gitClient.createGitClient(auth_token);
+      this.gitClient.createGitClient(this.gitClient.readCredentials());
     } catch (error) {
       const { token } = await this.prompt(quesitons.tokenQuestion);
       this.gitClient.createGitClient(this.gitClient.storeCredentials(token));
     }
+  }
+
+  validateUsername = async () => {
     try {
       const authenticated = await this.gitClient.getUserName();
       this.username = authenticated.data.login;
@@ -86,6 +87,13 @@ class Prompt {
       console.log(chalk.red(`  Invalid token`));
       exit();
     }
+  }
+
+  main = async () => {
+
+    await this.validateCredentials();
+    await this.validateUsername();
+
     this.prompt(quesitons.baseQuestions).then(async (answers) => {
       const { action } = answers;
       switch (action) {
@@ -105,7 +113,6 @@ class Prompt {
   test() {
     console.log('test');
     // let s = this.gitClient.pushCommand("projName", "dfsdf", false);
-    let s = this.gitClient.readCredentials()
     console.log(s);
   }
 

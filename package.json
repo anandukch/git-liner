@@ -1,6 +1,6 @@
 {
-  "name": "ghcli",
-  "version": "1.0.0",
+  "name": "@anandukch/ghcli",
+  "version": "1.0.2",
   "description": "",
   "type": "module",
   "main": "index.js",
@@ -13,24 +13,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anandukch/typescript-express-template.git"
+    "url": "git+https://github.com/anandukch/GhCli.git"
   },
   "bugs": {
-    "url": "https://github.com/anandukch/typescript-express-template/issues"
+    "url": "https://github.com/anandukch/GhCli/issues"
   },
-  "homepage": "https://github.com/anandukch/typescript-express-template#readme",
+  "homepage": "https://github.com/anandukch/GhCli#readme",
   "keywords": [
     "express",
+    "github",
+    "cli",
+    "command",
+    "commandline",
+    "command-line",
+    "git",
     "node",
     "typescript",
     "oops",
     "server",
-    "backend",
-    "container",
-    "docker",
-    "boilerplate",
-    "generator",
-    "template"
+    "backend"
   ],
   "author": "",
   "license": "ISC",

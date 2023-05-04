@@ -2,13 +2,16 @@ import { Octokit } from '@octokit/core';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import os from 'os';
 
 class GitClient {
   constructor() {
     this.__filename = fileURLToPath(import.meta.url);
     this.__dirname = path.dirname(this.__filename);
     this.gitDirectoryPath = path.join(this.__dirname, '.git');
-    this.credentialsPath = path.join(this.__dirname, '.credentials');
+    !fs.existsSync(`${os.homedir()}/.ghcli`) &&  fs.mkdirSync(`${os.homedir()}/.ghcli`);
+   
+    this.credentialsPath = path.join(`${os.homedir()}/.ghcli`, '.credentials');
   }
 
   createGitClient = (GITHUB_TOKEN) => {
