@@ -45,8 +45,8 @@ ghcli
 
 ### Create a github access token
 
-- Navigate to github Setting > developer option > personal acsess token and create a new access token.
-- Select the scopes with admin previlages
+- Navigate to github Setting > developer option > personal access token and create a new access token.
+- Select the scopes with ***admin previlages***
 
 <!-- add an image which show to add token ti cli -->
 
