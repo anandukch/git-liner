@@ -23,7 +23,7 @@
 ## Features
 
 - [x] Create a new repository
-- [x] Push to a repository
+- [x] Push the current project to the new repository
 - [x] Delete a repository
 - [x] Coming soon....
 
