@@ -1,7 +1,7 @@
 {
   "name": "git-liner",
-  "version": "1.2.1",
-  "description": "",
+  "version": "1.2.2",
+  "description": "A command line tool to interact with github",
   "type": "module",
   "main": "index.js",
   "engines": {
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anandukch/GhCli.git"
+    "url": "git+https://github.com/anandukch/git-liner.git"
   },
   "bugs": {
-    "url": "https://github.com/anandukch/GhCli/issues"
+    "url": "https://github.com/anandukch/git-liner/issues"
   },
-  "homepage": "https://github.com/anandukch/GhCli#readme",
+  "homepage": "https://github.com/anandukch/git-liner#readme",
   "keywords": [
     "express",
     "github",

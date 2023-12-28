@@ -4,7 +4,6 @@ import GitClient from './service.js';
 import chalk from 'chalk';
 import { config } from "dotenv"
 import { exec } from 'child_process';
-import { exit } from 'process';
 import quesitons from './quesitons.js';
 
 config();
@@ -53,7 +52,7 @@ class Prompt {
           return;
         }
         exec(
-          this.gitClient.pushCommand(projName, this.username, this.gitClient.isGitInitialized()), (err, stdout, stderr) => {
+          this.gitClient.pushCommand(projName, this.username, this.gitClient.isGitInitialized()), (err, stdout, _) => {
             if (err) {
               console.log(chalk.red(`   Failed to push to repo ${projName}`));
               return;
